@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Ejemplo de informe asociado a equipo (se genera al darle  aimprimir 
+        desde la vista Form de un equipo) -->
+    <template id="report_partido_view">
+        <!-- Aqui la estructura a seguir -->
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <!-- Cabecera con el nombre de equipo -->
+                        <h2>Partido: <t t-esc="doc.equipo_casa.nombre"/> vs <t t-esc="doc.equipo_fuera.nombre"/></h2>
+                        <p>Goles Local: <t t-esc="doc.goles_casa"/></p>
+                        <p>Goles Visitante: <t t-esc="doc.goles_fuera"/></p>
+                        <p>
+                            Resultado:
+                            <t t-esc="'Empate' if doc.goles_casa == doc.goles_fuera else ('Gana ' + doc.equipo_casa.nombre if doc.goles_casa > doc.goles_fuera else 'Gana ' + doc.equipo_fuera.nombre)"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Realmente, este es el informe, lo de arriba es la plantilla que utilizara el informe -->
+    <report
+        id="report_partido"
+        model="liga.partido"
+        string="Informe del Partido"
+        name="EJ07-LigaFutbol.report_partido_view"
+        file="EJ07-LigaFutbol.report_partido_view"
+        report_type="qweb-pdf"
+    />
+</odoo>

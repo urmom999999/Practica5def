@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id='liga_partido_action' model='ir.actions.act_window'>
+        <field name="name">Partidos de la liga</field>
+        <field name="res_model">liga.partido</field>
+        <field name="view_mode">kanban,list,form,graph</field>
+        
+    </record>
+
+    <menuitem name="Partidos de la liga" id="liga_partido_menu" parent="liga_base_menu" action="liga_partido_action" />
+
+    <record id="liga_partido_view_form" model="ir.ui.view">
+        <field name="name">Formulario Partidos</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="gollocal"
+                            type="object"
+                            string="+2 para local"
+                            class="btn-primary"/>
+
+                    <button name="golvisit"
+                            type="object"
+                            string="+2 para visitante"
+                            class="btn-secondary"/>
+
+                    <button name="abrir_wizard_crear_partido"
+                            type="object"
+                            string="Crear Nuevo Partido (Wizard)"
+                            class="btn-success"/>
+                </header>
+
+                <group>
+                    <group>
+                        <field name="equipo_casa" />
+                        <field name="goles_casa" />
+                    </group>
+
+                    <group>
+                        <field name="equipo_fuera" />
+                        <field name="goles_fuera" />
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Tree (List) -->
+    <record id="liga_partido_view_tree" model="ir.ui.view">
+        <field name="name">Lista de partidos de la liga</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <list>
+             
+                <field name="equipo_casa" />
+                <field name="goles_casa" />
+                <field name="equipo_fuera" />
+                <field name="goles_fuera" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_liga_partido_graph" model="ir.ui.view">
+        <field name="name">liga.partido.graph</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <graph string="Goles de equipos locales" type="bar">
+                <field name="equipo_casa" type="row"/>
+                
+                <field name="goles_casa" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Vista Kanban -->
+    <record id="liga_partido_view_kanban" model="ir.ui.view">
+        <field name="name">Lista de partidos de la liga</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="equipo_casa" />
+                <field name="goles_casa" />
+                <field name="equipo_fuera" />
+                <field name="goles_fuera" />
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_card">
+                                    <div class="text-muted">
+                                        <b>
+                                            <p>- Resultado -</p>
+                                        </b>
+                                    </div>
+                                    <div>
+                                        <field name="equipo_casa" /> :
+                                        <field name="goles_casa" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <field name="equipo_fuera" /> :
+                                    <field name="goles_fuera" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>
